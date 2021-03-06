@@ -1,5 +1,14 @@
 # Compound Calculator
 
+To benchmark the accuracy of my calculations, I have used [this compound calculator](https://www.thecalculatorsite.com/finance/calculators/compoundinterestcalculator.php) that is available online to create my scenarios for my tests.
+
+The formulas used are identical to the one of said compound calculator, which are described in detail on [this page](https://www.thecalculatorsite.com/articles/finance/compound-interest-formula.php).
+
+An example of the formulas are:
+![Compound Formulas](./compound_formulas.png?raw=true)
+![Compound Formulas Definitions](./compound_formulas_definition.png?raw=true)
+
+
 ## Setup
 Setup
 
