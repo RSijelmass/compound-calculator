@@ -8,7 +8,7 @@ class Calculator # < ApplicationRecord TODO how to make this a ApplicationRecord
   end
 
   def calculate_expected_value
-    @get_expected_value = (future_value_series).round(2)
+    @get_expected_value = (compound_interest_start_value + future_value_series).round(2)
     @get_expected_value
   end
 
@@ -28,21 +28,4 @@ class Calculator # < ApplicationRecord TODO how to make this a ApplicationRecord
 
     @monthly_input * final_multiplier
   end
-
-
-  # def calculate_compound_interest_start_value
-  #   compound_frequency = 12 # TODO do we want to make period flexible?
-  #   compound_interest = @start_value * (1 + (@compound_annual_interest / compound_frequency))**(compound_frequency*@years)
-  #   compound_interest
-  # end
-  #
-  # def future_value_series
-  #   compound_frequency = 12 # TODO do we want to make period flexible?
-  #   interest_calculation = (((1+ (@compound_annual_interest / compound_frequency))**(compound_frequency*@years)) - 1) / (@compound_annual_interest / compound_frequency)
-  #   future_value = @monthly_input * interest_calculation
-  #   future_value
-  # end
 end
-
-calculator = Calculator.new(70_000, 2200, 3)
-puts calculator.calculate_expected_value()

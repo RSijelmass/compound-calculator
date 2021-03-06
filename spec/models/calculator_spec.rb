@@ -11,10 +11,10 @@ RSpec.describe Calculator, type: :model do
       expect(calculator.calculate_expected_value()).to eq 71_592.90
     end
 
-    # it 'has a start value' do
-    #   start_value = 1_000
-    #   calculator = Calculator.new(start_value, monthly_input, years)
-    #   expect(calculator.calculate_expected_value()).to eq 2402.55 # TODO how to return money values?
-    # end
+    it 'has a start value' do
+      start_value = 10_000
+      calculator = Calculator.new(start_value, monthly_input, years)
+      expect(calculator.calculate_expected_value()).to eq 85_769.15
+    end
   end
 end
