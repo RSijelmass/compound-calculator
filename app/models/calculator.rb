@@ -1,42 +1,55 @@
+require_relative 'year'
+
 class Calculator # < ApplicationRecord TODO how to make this a ApplicationRecord with intitialize?
+  attr_reader :final_value
+
   def initialize(start_value, monthly_input, years)
     @start_value = start_value
     @monthly_input = monthly_input
-    @years = years
     @annual_interest = 0.07 # in percentages (7%)
-    @expected_value = nil
+    @final_value = nil
     @number_times_compounded = 12
+    @years = [*1..years]
   end
 
-  def calculate_expected_value
-    @get_expected_value = (compound_interest_start_value + future_value_series).round(2)
-    @get_expected_value
+  def calculate_all_years
+    @years = @years.each_with_index.map do |year, i|
+      total_value = (compound_interest_start_value(year) + future_value_series(year)).round(2)
+      saved_value = calculate_saved_value(year)
+      compounded_value = (total_value - saved_value).round(2)
+      Year.new(i+1, total_value, saved_value, compounded_value)
+    end
+    @years
   end
 
-  def get_compounded_increase
-    @get_expected_value - (@monthly_input * @number_times_compounded * @years) - @start_value
+  def get_values_for_year(year)
+    @years[year-1]
   end
 
-  def get_expected_value
-    @expected_value
+  def get_values_for_final_year
+    @years.last
   end
 
-  def calculate_saved_value
-    @start_value + (@monthly_input * @number_times_compounded * @years)
+  def get_compounded_increase(year)
+      @final_value - (@monthly_input * @number_times_compounded * year) - @start_value
   end
 
-  def compound_interest_start_value
-    @start_value * ((1 + (@annual_interest / @number_times_compounded))**(@number_times_compounded*@years))
+  def calculate_saved_value(year)
+    @start_value + (@monthly_input * @number_times_compounded * year)
   end
 
-  def future_value_series
+  def compound_interest_start_value(year)
+    @start_value * ((1 + (@annual_interest / @number_times_compounded))**(@number_times_compounded*year))
+  end
+
+  def future_value_series(year)
     compound_multiplier = (@annual_interest / @number_times_compounded)
-    final_multiplier = (((1 + compound_multiplier)**(@number_times_compounded*@years)) - 1) / compound_multiplier
+    final_multiplier = (((1 + compound_multiplier)**(@number_times_compounded*year)) - 1) / compound_multiplier
 
     @monthly_input * final_multiplier
   end
 end
 
-calculator = Calculator.new(70_000, 2200, 5)
-puts "total value: #{calculator.calculate_expected_value}"
-puts "compounded: #{calculator.get_compounded_increase}"
+calculator = Calculator.new(100_000, 0, 20)
+calculator.calculate_all_years
+year = calculator.get_values_for_final_year
