@@ -8,7 +8,6 @@ RSpec.describe Calculator do
       let(:start_value) { 10_000 }
 
       it 'can return the value generated of a certain year' do
-        start_value = 10_000
         calculator = Calculator.new(start_value, monthly_input, years)
         calculator.calculate_all_years
         actual_year = calculator.get_values_for_year(3)
@@ -19,7 +18,6 @@ RSpec.describe Calculator do
       end
 
       it 'can return the value generated of the final year' do
-        start_value = 10_000
         calculator = Calculator.new(start_value, monthly_input, years)
         calculator.calculate_all_years
         actual_year = calculator.get_values_for_final_year
@@ -40,6 +38,17 @@ RSpec.describe Calculator do
         expect(actual_year.total).to eq 71_592.90
         expect(actual_year.saved).to eq 60_000
         expect(actual_year.compounded).to eq 11_592.90
+      end
+    end
+
+    context 'out of bounds' do
+      let(:start_value) { 0 }
+
+      it 'fetches a year that does not exist' do
+        calculator = Calculator.new(start_value, monthly_input, years)
+        out_of_bound_year = years + 1
+        calculator.calculate_all_years
+        expect { calculator.get_values_for_year(out_of_bound_year) }.to raise_error 'This year is not defined.'
       end
     end
 end

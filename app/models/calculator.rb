@@ -23,6 +23,7 @@ class Calculator # < ApplicationRecord TODO how to make this a ApplicationRecord
   end
 
   def get_values_for_year(year)
+    raise 'This year is not defined.' if year > @years.length
     @years[year-1]
   end
 
