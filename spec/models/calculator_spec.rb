@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Calculator do
+RSpec.describe Calculator, :type => :model do
     let(:monthly_input) { 1_000 }
     let(:years) { 5 }
 
@@ -8,7 +8,7 @@ RSpec.describe Calculator do
       let(:start_value) { 10_000 }
 
       it 'can return the value generated of a certain year' do
-        calculator = Calculator.new(start_value, monthly_input, years)
+        calculator = Calculator.new(start_value: start_value, monthly_input: monthly_input, years_amount: years)
         calculator.calculate_all_years
         actual_year = calculator.get_values_for_year(3)
 
@@ -18,7 +18,7 @@ RSpec.describe Calculator do
       end
 
       it 'can return the value generated of the final year' do
-        calculator = Calculator.new(start_value, monthly_input, years)
+        calculator = Calculator.new(start_value: start_value, monthly_input: monthly_input, years_amount: years)
         calculator.calculate_all_years
         actual_year = calculator.get_values_for_final_year
 
@@ -31,7 +31,7 @@ RSpec.describe Calculator do
     context 'has no start value' do
       let(:start_value) { 0 }
       it 'returns expected total value' do
-        calculator = Calculator.new(start_value, monthly_input, years)
+        calculator = Calculator.new(start_value: start_value, monthly_input: monthly_input, years_amount: years)
         calculator.calculate_all_years
         actual_year = calculator.get_values_for_final_year
 
@@ -45,7 +45,7 @@ RSpec.describe Calculator do
       let(:start_value) { 0 }
 
       it 'fetches a year that does not exist' do
-        calculator = Calculator.new(start_value, monthly_input, years)
+        calculator = Calculator.new(start_value: start_value, monthly_input: monthly_input, years_amount: years)
         out_of_bound_year = years + 1
         calculator.calculate_all_years
         expect { calculator.get_values_for_year(out_of_bound_year) }.to raise_error 'This year is not defined.'

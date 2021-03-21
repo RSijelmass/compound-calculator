@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_200449) do
+ActiveRecord::Schema.define(version: 2021_03_21_094731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,18 @@ ActiveRecord::Schema.define(version: 2021_03_13_200449) do
   create_table "calculators", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "start_value"
+    t.float "monthly_input"
+    t.integer "years_amount"
   end
 
   create_table "years", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "saved"
+    t.float "total"
+    t.float "compounded"
+    t.integer "number"
   end
 
 end
